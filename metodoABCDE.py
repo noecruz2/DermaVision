@@ -1,7 +1,7 @@
 from PIL import Image
 import numpy as np
 
-UMBRAL_BINARIO = 135
+UMBRAL_BINARIO = 145
 MAX_VALOR = 255
 
 #Funcion para convertir la imagen cargada en RGB a escala de grises
@@ -54,6 +54,9 @@ def convertir_a_binario(img_gris):
 #Se obtiene el alto y ancho de la imagen binaria 
 #Se crea una matriz en false, al visitar los pixeles cambia a true
 #mejor_pixels almacena los pixeles del componente mas grande
+#Se recorre cada fila y columna de la imagen binaria
+#Si el pixel ya fue visitado o es blanco se continua al siguiente pixel
+#Se inicia un flood fill en los pixeles, almacenando 
 def componente_mas_grande(img_binaria):
     alto, ancho = img_binaria.shape
     visitado = np.zeros((alto, ancho), dtype=bool) #
@@ -67,7 +70,7 @@ def componente_mas_grande(img_binaria):
                 continue
 
             # flood fill en negros
-            stack = [(y, x)]
+            stack = [(y, x)] #esto sirve para almacenar los pixeles a visitar
             visitado[y][x] = True
             pixeles = []
 
@@ -238,4 +241,4 @@ def procesar_imagen(ruta):
 
 
 if __name__ == "__main__":
-    procesar_imagen("./DataSet/melanoma-1.jfif")
+    procesar_imagen("./DataSet/tatuaje.jpeg")
